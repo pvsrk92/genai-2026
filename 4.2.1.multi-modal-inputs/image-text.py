@@ -11,7 +11,7 @@ logfire.instrument_pydantic_ai()
 agent = Agent('groq:meta-llama/llama-4-scout-17b-16e-instruct', instructions='You are a helpful assistant.')
 
 async def main():
-    image_path = Path(__file__).parent.resolve() / 'data' /'image1.png'
+    image_path = Path(__file__).parent.resolve() / 'data' /'swagger-endpoints.png'
 
     result = await agent.run(
         [

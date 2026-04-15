@@ -21,9 +21,11 @@ class CountryInfo(BaseModel):
 
 agent = Agent(
     #'ollama:llama3-groq-tool-use:8b',
-    'groq:llama-3.3-70b-versatile',
+    #'groq:llama-3.3-70b-versatile',
+    'ollama:gemma4:latest',
     instructions="You are a helpful assistant.",
     output_type=CountryInfo,
+    retries=1
 )
 
 response = agent.run_sync("tell me about India")

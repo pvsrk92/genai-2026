@@ -11,13 +11,13 @@ import os
 
 load_dotenv(override=True)
 
-model = GroqModel('llama-3.3-70b-versatile')
+#model = GroqModel('llama-3.3-70b-versatile')
 #model = GroqModel('llama-3.3-70b-versatile', provider=GroqProvider(api_key=os.getenv('GROQ_API_KEY')))
-# custom_http_client = AsyncClient(timeout=30)
-# model = GroqModel(
-#     'llama-3.3-70b-versatile',
-#     provider=GroqProvider(api_key=os.getenv('GROQ_API_KEY'), http_client=custom_http_client),
-# )
+#custom_http_client = AsyncClient(timeout=30)
+model = GroqModel(
+     'llama-3.3-70b-versatile',
+     provider=GroqProvider(api_key=os.getenv('GROQ_API_KEY')),
+ )
 #model = HuggingFaceModel('Qwen/Qwen3.5-35B-A3B', provider=HuggingFaceProvider(api_key=os.getenv('HF_TOKEN'), provider_name='novita'))
 # ollama_model = OpenAIChatModel(
 #     'llama3-groq-tool-use:8b',

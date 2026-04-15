@@ -11,6 +11,7 @@ class Product(BaseModel):
 print("--- Testing Valid Data ---")
 try:
     p1 = Product(name="Laptop", price=999.99, quantity=10, rating=5, features=["SSD", "16GB RAM"])
+    print(p1)
 except ValidationError as e:
     print(e)
 

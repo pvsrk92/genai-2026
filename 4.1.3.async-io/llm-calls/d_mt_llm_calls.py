@@ -9,15 +9,16 @@ logfire.configure()
 logfire.instrument_pydantic_ai()
 
 agent = Agent(
-    'ollama:llama3-groq-tool-use:8b',
+    'groq:llama-3.3-70b-versatile',
+    #'ollama:llama3-groq-tool-use:8b',
     instructions="You are a helpful AI assistant",
 )
 def run_agent(i):
     return agent.run_sync("what is the capital of india. Just answer in one word")
 
 def main() -> None:
-    with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
-        futures = [executor.submit(run_agent, i) for i in range(100)]
+    with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+        futures = [executor.submit(run_agent, i) for i in range(10)]
         results = [
             future.result() for future in concurrent.futures.as_completed(futures)
         ]

@@ -9,7 +9,8 @@ logfire.configure()
 logfire.instrument_pydantic_ai()
 
 agent = Agent(
-    'ollama:llama3.1:8b',
+    'groq:llama-3.3-70b-versatile',
+    #'ollama:llama3.1:8b',
     instructions="You are a helpful AI assistant",
 )
 

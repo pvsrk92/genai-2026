@@ -21,7 +21,7 @@ agent = Agent(
     retries=5
 )
 
-user_prompt = "john is an ai engineer with 5 years of experience, skilled in Python and machine learning."
+user_prompt = "Krishna is an SharePoint Engineer with 12+ years of experience, skilled in .Net and React."
 response = agent.run_sync(user_prompt)
 print(response.output)
 print(response.usage())

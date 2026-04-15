@@ -4,7 +4,7 @@ from pydantic_ai import Agent
 load_dotenv(override=True)
 
 agent = Agent(
-    'ollama:gemma3:4b',
+    'ollama:gemma3:1b',
     instructions="You are a helpful assistant.",
 )
 

@@ -8,13 +8,14 @@ logfire.configure()
 logfire.instrument_pydantic_ai()
 
 agent = Agent(
-    'ollama:llama3-groq-tool-use:8b',
+    'groq:llama-3.3-70b-versatile',
+    #'ollama:gemma3:1b',
     instructions="You are a helpful AI assistant",
 )
 
 
 def main() -> None:
-    for _ in range(100):
+    for _ in range(10):
         res = agent.run_sync("what is the capital of india. Just answer in one word")
         print(res.output)
 

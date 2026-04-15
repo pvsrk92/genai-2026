@@ -7,7 +7,7 @@ def sleep_for_some_time(value: int) -> int:
 
 def main() -> None:
     tot_count = 0
-    for i in range(100):
+    for i in range(10):
         tot_count += sleep_for_some_time(i)
     print(tot_count)
 

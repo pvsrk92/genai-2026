@@ -1,6 +1,10 @@
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).parent.parent.resolve()))
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+from openai import models
 from pydantic_ai import Agent, BinaryContent
 from models.invoice import Invoice
 from models.payslip import Payslip
