@@ -1,28 +1,28 @@
 import asyncio
-from pathlib import Path
 from pydantic_ai import Agent, RunContext
 from dotenv import load_dotenv
+load_dotenv(override=True)
 import logfire
 from dataclasses import dataclass
+from hybrid_search_service import HybridSearchService
 
-load_dotenv(override=True)
 logfire.configure()
 logfire.instrument_pydantic_ai()
 
 
 @dataclass
 class KnowledgeDeps:
-    kb: str
+    hybrid_search_service: HybridSearchService
 
 kb_agent = Agent(
     #'groq:llama-3.3-70b-versatile',
      "ollama:glm-4.7-flash:q4_K_M",
-    instructions="You are a helpful assistant."
+    instructions="You are a helpful assistant. Always use the tool ask_knowledge_base to get information before answering."
 )
 
 
 @kb_agent.tool
-def get_knowledge_base(ctx: RunContext[KnowledgeDeps], query: str) -> str:
+async def ask_knowledge_base(ctx: RunContext[KnowledgeDeps], query: str) -> str:
     """
     Retrieve relevant information from the knowledge base based on a search query.
 
@@ -33,15 +33,15 @@ def get_knowledge_base(ctx: RunContext[KnowledgeDeps], query: str) -> str:
         The matching information or a "not found" message.
     """
     print(query)
-    return ctx.deps.kb
+    results = await ctx.deps.hybrid_search_service.search(query)
+    final_text = "\n".join([result["doc_content"] for result in results])
+    return final_text
 
 async def main():
-    path = Path(__file__).parent / "data/small/kb.txt"
-    deps = KnowledgeDeps(kb=path.read_text(encoding="utf-8"))
-
+    deps = KnowledgeDeps(hybrid_search_service=HybridSearchService())
     message_history = []
     
-    print("KB Agent is ready! (Type 'exit' to quit)")
+    print("RAG Agent is ready! (Type 'exit' to quit)")
     
     while True:
         user_input = input("\nUser: ")
@@ -52,8 +52,7 @@ async def main():
             result = await kb_agent.run(
                 user_input, 
                 deps=deps,
-                message_history=message_history,
-                model_settings={"tool_choice": 'get_knowledge_base'}
+                message_history=message_history
             )
         except Exception as e:
             print(f"Error: {e}")
@@ -64,8 +63,6 @@ async def main():
 if __name__ == "__main__":
     asyncio.run(main())
 
-
-# How long does international shipping take?
-# which Leather jackets are available in the store?
-# get the contact details of Harvest & Mill store
-# What is the return policy?
+# Can I use ChatGPT for my assignment?
+# What happens if I get sick during an exam?
+# How is the AI & Machine Learning course graded?

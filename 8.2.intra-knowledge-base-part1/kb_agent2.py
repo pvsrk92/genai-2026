@@ -12,7 +12,7 @@ logfire.instrument_pydantic_ai()
 
 @dataclass
 class KnowledgeDeps:
-    kb_path: str
+    kb: str
 
 kb_agent = Agent(
     #'groq:llama-3.3-70b-versatile',
@@ -37,13 +37,11 @@ def get_knowledge_base(ctx: RunContext[KnowledgeDeps], query: str) -> str:
         The matching information or a "not found" message.
     """
     print(query)
-    file_path = Path(ctx.deps.kb_path)
-    content = file_path.read_text(encoding="utf-8")
-    return content
+    return ctx.deps.kb
 
 async def main():
-    path = Path(__file__).parent / "kb.txt"
-    deps = KnowledgeDeps(kb_path=path)
+    path = Path(__file__).parent / "data/small/kb.txt"
+    deps = KnowledgeDeps(kb=path.read_text(encoding="utf-8"))
 
     message_history = []
     
