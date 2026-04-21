@@ -12,7 +12,7 @@ logfire.instrument_pydantic_ai()
 
 @dataclass
 class KnowledgeDeps:
-    kb_path: str
+    kb: str
 
 kb_agent = Agent(
     #'groq:llama-3.3-70b-versatile',
@@ -23,14 +23,11 @@ kb_agent = Agent(
 
 @kb_agent.instructions
 def get_knowledge_base(ctx: RunContext[KnowledgeDeps]) -> str:
-    print("dynamic instructions called")
-    file_path = Path(ctx.deps.kb_path)
-    content = file_path.read_text(encoding="utf-8")
-    return f"Answer the questions based on the following Knowledge Base Content:\n{content}"
+    return f"Answer the questions based on the following Knowledge Base Content:\n{ctx.dp.kb}"
 
 async def main():
-    path = Path(__file__).parent / "kb.txt"
-    deps = KnowledgeDeps(kb_path=path)
+    path = Path(__file__).parent / "data/small/kb.txt"
+    deps = KnowledgeDeps(kb=path.read_text(encoding="utf-8"))
 
     message_history = []
     
