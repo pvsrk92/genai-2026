@@ -17,11 +17,18 @@ class KnowledgeDeps:
 kb_agent = Agent(
     #'groq:llama-3.3-70b-versatile',
      "ollama:glm-4.7-flash:q4_K_M",
-    instructions="You are a helpful assistant. Always use the tool ask_knowledge_base to get information before answering."
+    #instructions="You are a helpful assistant. Always use the tool ask_knowledge_base to get information before answering."
+    instructions="You are a helpful assistant. Answer questions based on knowledge context provided to you"
 )
 
+@kb_agent.instructions
+async def dynamic_instructions(ctx: RunContext[KnowledgeDeps]) -> str:
+    print(ctx.prompt)
+    results = await ctx.deps.hybrid_search_service.search(ctx.prompt)
+    final_text = "\n".join([result["doc_content"] for result in results])
+    return final_text
 
-@kb_agent.tool
+# @kb_agent.tool
 async def ask_knowledge_base(ctx: RunContext[KnowledgeDeps], query: str) -> str:
     """
     Retrieve relevant information from the knowledge base based on a search query.

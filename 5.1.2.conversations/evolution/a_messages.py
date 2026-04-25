@@ -21,7 +21,8 @@ def print_result(result):
         print(message)
 
 agent = Agent(
-    'ollama:llama3-groq-tool-use:8b',
+    #'ollama:llama3-groq-tool-use:8b',
+    'groq:llama-3.3-70b-versatile',
     instructions="You are helpful assistant."
 )
 

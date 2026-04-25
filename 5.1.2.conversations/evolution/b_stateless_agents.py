@@ -21,11 +21,12 @@ def print_result(result):
         print(message)
 
 agent = Agent(
-    'ollama:llama3-groq-tool-use:8b',
+    #'ollama:llama3-groq-tool-use:8b',
+     'groq:llama-3.3-70b-versatile',
     instructions="You are helpful assistant."
 )
 
-result = agent.run_sync("i am thimmareddy and i am a researcher of AI and Consciousness")
+result = agent.run_sync("i am Siva and i am a researcher of AI and Consciousness")
 print_result(result)
 
 result = agent.run_sync("what is my name?")

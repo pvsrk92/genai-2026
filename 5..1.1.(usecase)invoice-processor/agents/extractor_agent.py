@@ -17,7 +17,7 @@ load_dotenv(override=True)
 logfire.configure()
 logfire.instrument_pydantic_ai()
 
-model = OpenAIChatModel("openai/gpt-4o", provider=GitHubProvider(api_key=os.getenv("GITHUB_API_KEY")), settings=ModelSettings(temperature=0))
+model = OpenAIChatModel("openai/gpt-4.1", provider=GitHubProvider(api_key=os.getenv("GITHUB_API_KEY")), settings=ModelSettings(temperature=0))
 #model = GroqModel('meta-llama/llama-4-scout-17b-16e-instruct', provider=GroqProvider(api_key=os.getenv("GROQ_API_KEY")), settings=ModelSettings(temperature=0))
 
 extraction_agent = Agent(
