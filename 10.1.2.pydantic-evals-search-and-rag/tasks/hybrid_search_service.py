@@ -6,7 +6,7 @@ class HybridSearchService:
     def __init__(self):
         self.embedder = Embedder('ollama:snowflake-arctic-embed2')
 
-    async def search(self, user_input, limit=3, k=60): 
+    async def search(self, user_input, limit=5, k=60): 
         DSN = "postgresql://postgres:postgres@localhost:5432/postgres"
         pool = await asyncpg.create_pool(DSN, init=register_vector)   
         async with pool.acquire() as conn:
