@@ -35,7 +35,7 @@ dataset = Dataset(
             PASS if they carry the same meaning and key facts, even if wording differs. 
             FAIL if the summary loses essential information or introduces inaccuracies.
             """              
-        )],
+        )]
 )
 
 async def main():
