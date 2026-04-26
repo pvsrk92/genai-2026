@@ -54,7 +54,7 @@ async def run_evaluation(limit: int = 1):
                     "Score 1.0 if it is perfectly grounded. "
                     "Score 0.0 if it introduces outside information or hallucinations."
                 ),
-                include_input=True,
+                include_input=False,
                 include_expected_output=False,
                 score={'evaluation_name': 'groundedness'},
             ),
@@ -70,7 +70,20 @@ async def run_evaluation(limit: int = 1):
                 include_input=True,
                 include_expected_output=True, # Use gold answer as a hint for key facts
                 score={'evaluation_name': 'completeness'},
+            ),
+            # 3. Semantic Relevance: Checks for relevance to the query
+            LLMJudge(
+                model="ollama:glm-4.7-flash:q4_K_M",
+                rubric=(
+                    "Does the output matches semantically with expected output?"
+                    "Score 1.0 if it is a comprehensive answer. "
+                    "Score 0.0 if it omits key details from the source context."
+                ),
+                include_input=False,
+                include_expected_output=True, # Use gold answer as a hint for key facts
+                score={'evaluation_name': 'relevance'},
             )
+
         ]
     )
 

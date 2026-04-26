@@ -30,6 +30,7 @@ dataset = Dataset(
     ],
     evaluators=[LLMJudge(
             model="ollama:glm-4.7-flash:q4_K_M",
+            include_expected_output=True,
             rubric=(
                 "Compare the model's output to the expected output. "
                 "PASS if they carry the same meaning and key facts, even if wording differs. "
