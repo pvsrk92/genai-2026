@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv(override=True)
 embedder = Embedder('ollama:snowflake-arctic-embed2')
 
-def chunk_text(text: str, file_name: str, chunk_size: int = 512) -> list[dict[str, str]]:
+def chunk_text(text: str, file_name: str, chunk_size: int = 1024) -> list[dict[str, str]]:
         raw_doc = Document(page_content=text)
 
         text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
@@ -55,7 +55,7 @@ async def setup_vector_database_and_ingest(pool):
             chunks = chunk_text(text, file.name)
             for i,chunk in enumerate(chunks):
                 result = await embedder.embed_documents(chunk)
-                chunk_id = f"{file.stem}_chunk_{i}"
+                chunk_id = f"{file.stem}-chunk-{i}"
                 await conn.execute(
                     "INSERT INTO document_chunks (doc_name, chunk_id, chunk_content, embedding_vector) VALUES ($1, $2, $3, $4)", 
                     file.name, chunk_id, chunk, result.embeddings[0]

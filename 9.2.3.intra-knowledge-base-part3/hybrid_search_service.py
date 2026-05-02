@@ -51,6 +51,7 @@ class HybridSearchService:
                 print(f"chunk_id={chunk_id} | Score={score:.4f}")
                 final_results.append({
                     "score": score,
+                    "chunk_id": chunk_id,
                     "chunk_content": content
                 })
 
